@@ -3,6 +3,7 @@
 AGED_BRIE = "Aged Brie"
 BACKSTAGE_PASSES = "Backstage passes to a TAFKAL80ETC concert"
 SULFURAS = "Sulfuras, Hand of Ragnaros"
+CONJURED_PREFIX = "Conjured"
 
 MIN_QUALITY = 0
 MAX_QUALITY = 50
@@ -31,6 +32,8 @@ class GildedRose(object):
             self._increase_quality(item, rate)
         elif item.name == BACKSTAGE_PASSES:
             self._update_backstage_pass_quality(item)
+        elif item.name.startswith(CONJURED_PREFIX):
+            self._decrease_quality(item, 2 * rate)
         else:
             self._decrease_quality(item, rate)
 
