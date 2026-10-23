@@ -7,6 +7,7 @@ from gilded_rose import Item, GildedRose
 AGED_BRIE = "Aged Brie"
 BACKSTAGE_PASSES = "Backstage passes to a TAFKAL80ETC concert"
 SULFURAS = "Sulfuras, Hand of Ragnaros"
+CONJURED_ITEM = "Conjured Mana Cake"
 ORDINARY_ITEM = "+5 Dexterity Vest"
 
 
@@ -86,6 +87,41 @@ class GildedRoseTest(unittest.TestCase):
 
     def test_sulfuras_past_sell_by_date_never_changes(self):
         self.assert_item(update_item(SULFURAS, -1, 80), -1, 80)
+
+    # Conjured items
+
+    def test_conjured_item_degrades_by_two_before_sell_by_date(self):
+        self.assert_item(update_item(CONJURED_ITEM, 10, 20), 9, 18)
+
+    def test_conjured_item_degrades_by_two_on_last_day_before_sell_by_date(self):
+        self.assert_item(update_item(CONJURED_ITEM, 1, 20), 0, 18)
+
+    def test_conjured_item_degrades_by_four_on_sell_by_date(self):
+        self.assert_item(update_item(CONJURED_ITEM, 0, 20), -1, 16)
+
+    def test_conjured_item_degrades_by_four_after_sell_by_date(self):
+        self.assert_item(update_item(CONJURED_ITEM, -1, 20), -2, 16)
+
+    def test_conjured_item_quality_can_reach_exactly_zero(self):
+        self.assert_item(update_item(CONJURED_ITEM, 5, 2), 4, 0)
+
+    def test_conjured_item_with_quality_one_stops_at_zero(self):
+        self.assert_item(update_item(CONJURED_ITEM, 5, 1), 4, 0)
+
+    def test_conjured_item_quality_is_never_negative(self):
+        self.assert_item(update_item(CONJURED_ITEM, 5, 0), 4, 0)
+
+    def test_expired_conjured_item_with_quality_two_stops_at_zero(self):
+        self.assert_item(update_item(CONJURED_ITEM, 0, 2), -1, 0)
+
+    def test_expired_conjured_item_with_quality_three_stops_at_zero(self):
+        self.assert_item(update_item(CONJURED_ITEM, 0, 3), -1, 0)
+
+    def test_conjured_item_over_several_days(self):
+        expected_by_day = [(2, 4), (1, 2), (0, 0), (-1, 0), (-2, 0)]
+        for days, (sell_in, quality) in enumerate(expected_by_day, start=1):
+            with self.subTest(days=days):
+                self.assert_item(update_item(CONJURED_ITEM, 3, 6, days), sell_in, quality)
 
     # Inventory
 
