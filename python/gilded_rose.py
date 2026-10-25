@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 
-AGED_BRIE = "Aged Brie"
-BACKSTAGE_PASSES = "Backstage passes to a TAFKAL80ETC concert"
-SULFURAS = "Sulfuras, Hand of Ragnaros"
-CONJURED_PREFIX = "Conjured"
-
-MIN_QUALITY = 0
-MAX_QUALITY = 50
+from constants import (
+    AGED_BRIE,
+    BACKSTAGE_PASSES,
+    CONJURED_PREFIX,
+    MAX_QUALITY,
+    MIN_QUALITY,
+    SULFURAS,
+)
 
 
 class GildedRose(object):

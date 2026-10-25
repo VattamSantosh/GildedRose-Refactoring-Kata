@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
 import unittest
 
+from constants import AGED_BRIE, BACKSTAGE_PASSES, SULFURAS
 from gilded_rose import Item, GildedRose
 
 
-AGED_BRIE = "Aged Brie"
-BACKSTAGE_PASSES = "Backstage passes to a TAFKAL80ETC concert"
-SULFURAS = "Sulfuras, Hand of Ragnaros"
 CONJURED_ITEM = "Conjured Mana Cake"
 ORDINARY_ITEM = "+5 Dexterity Vest"
 
